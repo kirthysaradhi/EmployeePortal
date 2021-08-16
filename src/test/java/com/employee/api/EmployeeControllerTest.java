@@ -1,26 +1,28 @@
 package com.employee.api;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.nio.charset.Charset;
 
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 
 import com.employee.api.controller.EmployeeController;
 import com.employee.api.model.Employee;
+import com.employee.api.service.EmployeeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -40,6 +42,9 @@ public class EmployeeControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
+	
+	@Mock
+	private EmployeeService service;
 
 	@InjectMocks
 	private EmployeeController controller;
@@ -81,11 +86,6 @@ public class EmployeeControllerTest {
 	@Test
 	public void findEmployeeByIdTest() throws Exception {
 		mockMvc.perform(get("/api/employee/find/9")).andExpect(status().isOk());
-	}
-
-	@Test
-	public void deleteEmployeeByIdTest() throws Exception {
-		mockMvc.perform(delete("/api/employee/delete/5")).andExpect(status().isOk());
 	}
 
 }

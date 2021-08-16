@@ -11,4 +11,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "No Employee ID Found for the Respective Operation")
 public class EmployeeNotFoundException extends RuntimeException {
 
+	private static final long serialVersionUID = 1L;
+
 }
