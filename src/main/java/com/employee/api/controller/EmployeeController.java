@@ -2,6 +2,9 @@ package com.employee.api.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +51,31 @@ public class EmployeeController {
 		service.save(e);
 
 		return new ResponseEntity<>(service.responseStatus("New Employee added with Id " + e.getId()), HttpStatus.OK);
+	}
+
+	@PostMapping("/addConcurrent")
+	public ResponseEntity<ResponseStatus> addEmployeeConcurrent(@RequestBody List<Employee> empList) {
+
+		for (Employee emp : empList) {
+			emp.setId(seqGenService.sequenceGenerator(Employee.SEQUENCE_NAME));
+
+			Callable<Employee> callableObj = () -> {
+				return service.save(emp);
+			};
+			ExecutorService service = Executors.newSingleThreadExecutor();
+			service.submit(callableObj);
+			/*try {
+				Employee result = future.get();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}*/
+
+		}
+
+		return new ResponseEntity<>(service.responseStatus("Number of New Employees added:" + empList.size()),
+				HttpStatus.OK);
 	}
 
 	@GetMapping("/find/{id}")

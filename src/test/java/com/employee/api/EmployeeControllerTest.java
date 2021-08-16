@@ -87,5 +87,10 @@ public class EmployeeControllerTest {
 	public void findEmployeeByIdTest() throws Exception {
 		mockMvc.perform(get("/api/employee/find/9")).andExpect(status().isOk());
 	}
+	
+	@Test
+	public void findEmployeePaginationTest() throws Exception {
+		mockMvc.perform(get("/api/employee/findPageable?page=1&size=2&sort=id")).andExpect(status().isOk());
+	}
 
 }

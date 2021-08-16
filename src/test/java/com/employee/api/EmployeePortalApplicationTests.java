@@ -1,8 +1,6 @@
 package com.employee.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -53,8 +51,8 @@ public class EmployeePortalApplicationTests {
 	@Test
 	public void saveEmployeeTest() {
 		Employee emp = new Employee(5, "Kirthy", "Saradhi", "Senior Java Consultant", 67);
-		service.save(emp);
-		verify(repository, times(1)).save(emp);
+		when(repository.save(emp)).thenReturn(emp);
+		assertEquals(emp, service.save(emp));
 	}
 
 	@Test

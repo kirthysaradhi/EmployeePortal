@@ -24,9 +24,10 @@ public class EmployeeService {
 	@Autowired
 	private EmployeeRepository repository;
 
-	public void save(Employee emp) {
-		repository.save(emp);
+	public Employee save(Employee emp) {
+		return repository.save(emp);
 	}
+	
 
 	public Optional<Employee> findById(int id) {
 		return repository.findById(id);

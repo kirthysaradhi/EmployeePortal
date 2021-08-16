@@ -12,4 +12,5 @@ import com.employee.api.model.Employee;
 public interface EmployeeRepository extends MongoRepository<Employee, Integer> {
 
 	Long deleteEmployeeById(int id);
+
 }
